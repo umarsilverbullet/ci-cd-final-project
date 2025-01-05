@@ -30,9 +30,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      # install flake 8
-      - name: Install flake 8
-        run: npm install flake8
+          
       # Runs - Lint with Flake 8
       - name: Run a one-line script
         run: |
