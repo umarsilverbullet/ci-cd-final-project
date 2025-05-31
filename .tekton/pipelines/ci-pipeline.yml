@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: ci-pipeline
+spec:
+  params:
+    - name: git-repo
+      type: string
+      description: https://github.com/umarsilverbullet/ci-cd-final-project
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: "$(params.git-repo)"
+        - name: revision
+          value: "main"
+    
+    - name: lint
+      taskRef:
+        name: lint
+      runAfter:
+        - clone
+      params:
+        - name: workspace
+          value: "source"
+
+    - name: test
+      taskRef:
+        name: test
+      runAfter:
+        - clone
+      params:
+        - name: workspace
+          value: "source"
